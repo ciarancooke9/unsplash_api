@@ -1,10 +1,10 @@
 <?php
 
-function searchPhoto($query)
+function searchPhoto($query, $page = 1)
 {
     $ch = curl_init();
 
-    $url = "https://api.unsplash.com/search/photos?page=1&per_page=9&query='{$query}'&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
+    $url = "https://api.unsplash.com/search/photos?page={$page}&per_page=9&query='{$query}'&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
 
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -51,7 +51,7 @@ function searchPhoto($query)
 function randomPhoto()
 {
     $ch = curl_init();
-    $random = rand(1,5);
+    $random = rand(1,100);
     $url = "https://api.unsplash.com/photos?page={$random}&per_page=9&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
 
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -92,6 +92,10 @@ function randomPhoto()
 
     }
     curl_close($ch);
+
+}
+
+function navFunction(){
 
 }
 ?>

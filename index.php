@@ -37,7 +37,7 @@
         <div class="col-lg-5">
             <div class="mb-3">
 
-                <form action="index.php" method="post">
+                <form action="index.php" method="get">
                     <div class="col-auto">
                         <label for="inputPassword2" class="visually-hidden">Search</label>
                         <input type="text" class="form-control" name="search" placeholder="Search">
@@ -54,19 +54,41 @@
     <!-- Content Row-->
     <div class="row gx-4 gx-lg-5">
         <?php
-        if ($_POST){
-            //$search = $_POST['search'];
-            searchPhoto($_POST['search']);
-            //echo print_r($list) .  "<br>";
-        } else {
+        if ($_GET){
+            searchPhoto($_GET['search']);
+
+
+        }
+        else {
             randomPhoto();
         }
         ?>
 </div>
+<div class="row gx-4 gx-lg-5">
+    <div class="col-lg-5"></div>
+    <div class="col-lg-5">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
 
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="index.php?page=2">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>
+            <li class="page-item"><a class="page-link" href="#">6</a></li>
+            <li class="page-item"><a class="page-link" href="#">7</a></li>
+            <li class="page-item"><a class="page-link" href="#">8</a></li>
+            <li class="page-item"><a class="page-link" href="#">9</a></li>
+            <li class="page-item"><a class="page-link" href="#">10</a></li>
 
+        </ul>
+    </nav>
+    </div>
+    <div class="col-lg-5"></div>
+</div>
 <!-- Footer-->
 <footer class="py-5 bg-dark">
+
     <div class="container px-4 px-lg-5"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
 </footer>
 <!-- Bootstrap core JS-->
