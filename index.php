@@ -2,7 +2,7 @@
 
 $ch = curl_init();
 
-$url = "https://reqres.in/api/users?page=2";
+$url = "https://api.unsplash.com/search/photos?query=office&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
 
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -14,12 +14,14 @@ if ($err = curl_error($ch)) {
 }
 else {
     $decoded = json_decode($response, true);
-    echo '<pre>'; print_r($decoded); echo '</pre>';
+    //echo '<pre>'; print_r($decoded); echo '</pre>';
 }
-foreach($decoded['data'] as $result) {
-    echo($result["first_name"]);
-    $avatar = $result["avatar"];
-    echo "<img src='{$avatar}'> <br>";
+foreach($decoded['results'] as $result) {
+    echo $result["id"] . " ";
+    $links = $result["urls"];
+    $source = $links['small'];
+    echo "<img src='$source'>";
+    ///echo "<img src='{$avatar}'> <br>";
 }
 curl_close($ch);
 
