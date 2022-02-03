@@ -1,4 +1,4 @@
-<?php include "indexold.php"; ?>
+<?php include "functions.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +33,7 @@
 <div class="container px-4 px-lg-5">
     <!-- Heading Row-->
     <div class="row gx-4 gx-lg-5 align-items-center my-5">
-        <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0" src="https://dummyimage.com/900x400/dee2e6/6c757d.jpg" alt="..." /></div>
+        <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0" src="https://support.apple.com/library/content/dam/edam/applecare/images/en_US/social/supportapphero/camera-modes-hero.jpg" alt="..." /></div>
         <div class="col-lg-5">
             <div class="mb-3">
 
@@ -55,23 +55,11 @@
     <div class="row gx-4 gx-lg-5">
         <?php
         if ($_POST){
-            $search = $_POST['search'];
-            $list = searchPhoto($search);
+            //$search = $_POST['search'];
+            searchPhoto($_POST['search']);
             //echo print_r($list) .  "<br>";
-
-            $i = 0;
-            foreach ($list as $link){
-                echo '<div class="col-md-4 mb-5">';
-                echo '<div class="card h-100">';
-                echo "<div class='card-body'>";
-
-                echo "<img class='card-img' src='{$link[0]}' height='200' width='200'>";
-                echo "</div>";
-                echo "<div class='card-footer'> <p> {$link[1]}</p> </div>";
-                echo "</div>";
-                echo "</div>";
-
-            }
+        } else {
+            randomPhoto();
         }
         ?>
 </div>
