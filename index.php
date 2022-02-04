@@ -66,28 +66,19 @@
         ?>
 </div>
 <div class="row gx-4 gx-lg-5">
-    <div class="col-lg-5"></div>
+    <div class="col-lg-4"></div>
     <div class="col-lg-5">
     <nav aria-label="Page navigation example">
         <ul class="pagination">
         <?php
-            if (isset($_GET)) {
-                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=1'>1</a></li>";
-                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=2'>2</a></li>";
-                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=3'>3</a></li>";
-                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=4'>4</a></li>";
-                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=5'>5</a></li>";
-                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=6'>6</a></li>";
-                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=7'>7</a></li>";
-                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=8'>8</a></li>";
-                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=9'>9</a></li>";
-                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=10'>10</a></li>";
+            if ($_GET) {
+                navFunction();
             }
         ?>
         </ul>
     </nav>
     </div>
-    <div class="col-lg-5"></div>
+    <div class="col-lg-3"></div>
 </div>
 <!-- Footer-->
 <footer class="py-5 bg-dark">
