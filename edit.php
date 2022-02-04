@@ -34,12 +34,16 @@
     <!-- Heading Row-->
 
         <div class="col-lg-7">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="https://support.apple.com/library/content/dam/edam/applecare/images/en_US/social/supportapphero/camera-modes-hero.jpg" alt="..." />
+            <br><br>
+
+            <?php
+            photoEdit();
+            ?>
         </div>
         <div class="col-lg-5">
             <div class="mb-3">
 
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
 
                     <div class="form-group">
                         <label for="post_image">Add Image</label>

@@ -107,4 +107,26 @@ function navFunction(){
     echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=9'>9</a></li>";
     echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=10'>10</a></li>";
 }
+
+function photoEdit(){
+    if (!$_POST) {
+        echo "<img class='img-fluid rounded mb-4 mb-lg-0' src='https://support.apple.com/library/content/dam/edam/applecare/images/en_US/social/supportapphero/camera-modes-hero.jpg' alt='...' />";
+    } elseif ($_POST) {
+        $width = $_POST['width'];
+        $height = $_POST['height'];
+        $post_image = $_FILES['image']['name'];
+        $post_image_temp = $_FILES['image']['tmp_name'];
+        echo "<h1>$post_image</h1>";
+
+        move_uploaded_file($post_image_temp, "images/$post_image");
+
+        $original = imagecreatefromjpeg("images/$post_image");
+        list($oldheight, $oldwidth) = getimagesize("images/$post_image");
+        $resized = imagecreatetruecolor($width, $height);
+        imagecopyresampled($resized, $original, 0, 0, 0, 0, $width, $height, $oldwidth, $oldheight);
+        imagejpeg($resized, "resized.jpg");
+        imagedestroy($original);
+        echo "<img class='img-fluid rounded mb-4 mb-lg-0' src='resized.jpg' />";
+    }
+}
 ?>
