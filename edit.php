@@ -32,62 +32,35 @@
 <!-- Page Content-->
 <div class="container px-4 px-lg-5">
     <!-- Heading Row-->
-    <div class="row gx-4 gx-lg-5 align-items-center my-5">
-        <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0" src="https://support.apple.com/library/content/dam/edam/applecare/images/en_US/social/supportapphero/camera-modes-hero.jpg" alt="..." /></div>
+
+        <div class="col-lg-7">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="https://support.apple.com/library/content/dam/edam/applecare/images/en_US/social/supportapphero/camera-modes-hero.jpg" alt="..." />
+        </div>
         <div class="col-lg-5">
             <div class="mb-3">
 
-                <form action="index.php" method="get">
-                    <div class="col-auto">
-                        <input type="hidden" name="page" value="1" />
-                        <label for="inputPassword2" class="visually-hidden">Search</label>
-                        <input type="text" class="form-control" name="search" placeholder="Search Photos">
+                <form action="" method="post">
+
+                    <div class="form-group">
+                        <label for="post_image">Add Image</label>
+                        <input class="form-control" type="file" name="image">
                     </div>
-                    <div class="col-auto">
-                        <br>
-                        <input type="submit" class="btn btn-primary mb-3">
+                    <div class="form-group">
+                        <label for="width">Width</label>
+                        <input type="text" class="form-control" name="width" placeholder="300">
+                        <small id="emailHelp" class="form-text text-muted">Enter the width you want your photo to be.</small>
                     </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Height</label>
+                        <input type="text" class="form-control" name="height" placeholder="300">
+                        <small id="emailHelp" class="form-text text-muted">Enter the height you want your photo to be.</small>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="aspect">
+                        <label class="form-check-label" for="aspect">Keep aspect ratio</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
 
+            </div>
         </div>
-    </div>
-    </div>
-
-    <!-- Content Row-->
-    <div class="row gx-4 gx-lg-5">
-        <?php
-        if ($_GET){
-            searchPhoto($_GET['search'], $_GET['page']);
-        } elseif ($_GET){
-            searchPhoto($_GET['search']);
-        }
-        else {
-            randomPhoto();
-        }
-        ?>
-</div>
-<div class="row gx-4 gx-lg-5">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-5">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-        <?php
-            if ($_GET) {
-                navFunction();
-            }
-        ?>
-        </ul>
-    </nav>
-    </div>
-    <div class="col-lg-3"></div>
-</div>
-<!-- Footer-->
-<footer class="py-5 bg-dark">
-
-    <div class="container px-4 px-lg-5"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
-</footer>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-</body>
-</html>

@@ -38,7 +38,7 @@ function searchPhoto($query, $page = 1)
         echo '<div class="card h-100">';
         echo "<div class='card-body'>";
 
-        echo "<img class='card-img' src='{$link[0]}' height='200' width='200' alt='{$link[0]}'>";
+        echo "<a href='{$link[0]}'><img class='card-img' src='{$link[0]}' height='200' width='200'></a>";
         echo "</div>";
         echo "<div class='card-body'> <p> {$link[1]}</p> </div>";
         echo "</div>";
@@ -84,7 +84,7 @@ function randomPhoto()
         echo '<div class="card h-100">';
         echo "<div class='card-body'>";
 
-        echo "<img class='card-img' src='{$link}' height='200' width='200'>";
+        echo "<a href='{$link}'><img class='card-img' src='{$link}' height='200' width='200'></a>";
         echo "</div>";
 
         echo "</div>";
