@@ -17,7 +17,7 @@
 <!-- Responsive navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container px-5">
-        <a class="navbar-brand" href="#!">Start Bootstrap</a>
+        <a class="navbar-brand" href="#!">Photo Search</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -39,6 +39,7 @@
 
                 <form action="index.php" method="get">
                     <div class="col-auto">
+                        <input type="hidden" name="page" value="1" />
                         <label for="inputPassword2" class="visually-hidden">Search</label>
                         <input type="text" class="form-control" name="search" placeholder="Search">
                     </div>
@@ -55,9 +56,9 @@
     <div class="row gx-4 gx-lg-5">
         <?php
         if ($_GET){
+            searchPhoto($_GET['search'], $_GET['page']);
+        } elseif ($_GET){
             searchPhoto($_GET['search']);
-
-
         }
         else {
             randomPhoto();
@@ -69,18 +70,20 @@
     <div class="col-lg-5">
     <nav aria-label="Page navigation example">
         <ul class="pagination">
-
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="index.php?page=2">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item"><a class="page-link" href="#">6</a></li>
-            <li class="page-item"><a class="page-link" href="#">7</a></li>
-            <li class="page-item"><a class="page-link" href="#">8</a></li>
-            <li class="page-item"><a class="page-link" href="#">9</a></li>
-            <li class="page-item"><a class="page-link" href="#">10</a></li>
-
+        <?php
+            if (isset($_GET)) {
+                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=1'>1</a></li>";
+                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=2'>2</a></li>";
+                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=3'>3</a></li>";
+                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=4'>4</a></li>";
+                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=5'>5</a></li>";
+                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=6'>6</a></li>";
+                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=7'>7</a></li>";
+                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=8'>8</a></li>";
+                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=9'>9</a></li>";
+                echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=10'>10</a></li>";
+            }
+        ?>
         </ul>
     </nav>
     </div>
