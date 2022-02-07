@@ -32,14 +32,14 @@
 <!-- Page Content-->
 <div class="container px-4 px-lg-5">
     <!-- Heading Row-->
-
-        <div class="col-lg-7">
+    <?php
+    photoEdit();
+    ?>
+        <!--<div class="col-lg-7">
             <br><br>
 
-            <?php
-            photoEdit();
-            ?>
-        </div>
+
+        </div> -->
         <div class="col-lg-5">
             <div class="mb-3">
 
@@ -51,17 +51,18 @@
                     </div>
                     <div class="form-group">
                         <label for="width">Width</label>
-                        <input type="text" class="form-control" name="width" placeholder="300">
+                        <input type="number" class="form-control" name="width" placeholder="300">
                         <small id="emailHelp" class="form-text text-muted">Enter the width you want your photo to be.</small>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Height</label>
-                        <input type="text" class="form-control" name="height" placeholder="300">
+                        <input type="number" class="form-control" name="height" placeholder="300">
                         <small id="emailHelp" class="form-text text-muted">Enter the height you want your photo to be.</small>
                     </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" name="aspect">
                         <label class="form-check-label" for="aspect">Keep aspect ratio</label>
+                        <small id="aspectHelp" class="form-text text-muted">If checked please only fill out one of the above fields.</small>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
