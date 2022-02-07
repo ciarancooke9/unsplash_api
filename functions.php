@@ -108,5 +108,4 @@ function navFunction(){
     echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=10'>10</a></li>";
 }
 
-
 ?>
