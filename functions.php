@@ -1,8 +1,11 @@
 <?php
 //this function saves recent searches to a cookie
-function recentSearches($recentSearch=''){
+function recentSearches($recentSearch='')
+{
     // if the cookie exists, read it and unserialize it. If not, create a blank array
-    if(array_key_exists('recentSearches', $_COOKIE)) {
+    if ($recentSearch != '') {
+        ///if array exsits read it and add $recentSearch value, Else create a new array
+    if (array_key_exists('recentSearches', $_COOKIE)) {
         $cookie = $_COOKIE['recentSearches'];
         $cookie = unserialize($cookie);
     } else {
@@ -13,16 +16,24 @@ function recentSearches($recentSearch=''){
 
 
     // save the cookie
-    setcookie('recentSearches', serialize($cookie), time()+3600);
-
+    setcookie('recentSearches', serialize($cookie), time() + 3600);
+}
 }
 
-function recentSearchesTable($searchesArray){
+function recentSearchesTable(){
+    $searchesArray = unserialize($_COOKIE['recentSearches'], ["allowed_classes" => false]);
+
+    //reverse array so most recent searches are first
+    $searchesArray = array_reverse($searchesArray);
+
     echo "<h2>Your recent searches:</h2><br>";
-    echo "<ul>";
-    foreach ($searchesArray as $searchTerm){
-        echo "<li>$searchTerm</li>";
-    }
+    echo "<ul class='list-group'>";
+    //output searches as bullet points, limited to last 3 searches
+
+    echo "<li class='list-group-item'><a href='index.php?search={$searchesArray[0]}&page=1'>$searchesArray[0]</a></li>";
+    echo "<li class='list-group-item'><a href='index.php?search={$searchesArray[1]}&page=1'>$searchesArray[1]</a></li>";
+    echo "<li class='list-group-item'><a href='index.php?search={$searchesArray[2]}&page=1'>$searchesArray[2]</a></li>";
+
     echo "</ul>";
 }
 
