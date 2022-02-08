@@ -1,5 +1,10 @@
 <?php include "functions.php"; ?>
-
+<?php if ($_GET){
+    recentSearches($_GET['search']);
+} else {
+    recentSearches();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,8 +52,13 @@
                         <br>
                         <input type="submit" class="btn btn-primary mb-3">
                     </div>
-                </form>
 
+                </form>
+                <?php
+
+                    recentSearchesTable(recentSearches());
+
+                ?>
         </div>
     </div>
     </div>
@@ -58,8 +68,7 @@
         <?php
         if ($_GET){
             searchPhoto($_GET['search'], $_GET['page']);
-        } elseif ($_GET){
-            searchPhoto($_GET['search']);
+
         }
         else {
             randomPhoto();

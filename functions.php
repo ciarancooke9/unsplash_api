@@ -1,4 +1,31 @@
 <?php
+//this function saves recent searches to a cookie
+function recentSearches($recentSearch=''){
+    // if the cookie exists, read it and unserialize it. If not, create a blank array
+    if(array_key_exists('recentSearches', $_COOKIE)) {
+        $cookie = $_COOKIE['recentSearches'];
+        $cookie = unserialize($cookie);
+    } else {
+        $cookie = array();
+    }
+
+    $cookie[] = $recentSearch;
+
+
+    // save the cookie
+    setcookie('recentSearches', serialize($cookie), time()+3600);
+    $data = unserialize($_COOKIE['recentSearches'], ["allowed_classes" => false]);
+    return $data;
+}
+
+function recentSearchesTable($searchesArray){
+    echo "<h2>Your recent searches:</h2><br>";
+    echo "<ul>";
+    foreach ($searchesArray as $searchTerm){
+        echo "<li>$searchTerm</li>";
+    }
+    echo "</ul>";
+}
 
 function cleanSearchInput($data) {
     $data = trim($data);
