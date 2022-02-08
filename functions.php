@@ -1,9 +1,25 @@
 <?php
 
+function cleanInput($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+
+    ///Replace white spaces with +
+    $searchString = " ";
+    $replaceString = "+";
+    $data = str_replace($searchString, $replaceString, $data);
+
+    return $data;
+}
+
+
 function searchPhoto($query, $page = 1)
 {
     $ch = curl_init();
 
+    $query = cleanInput($query);
+    $page = cleanInput($page);
     $url = "https://api.unsplash.com/search/photos?page={$page}&per_page=9&query='{$query}'&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
 
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -19,6 +35,7 @@ function searchPhoto($query, $page = 1)
     }
     $i = 0;
     $pic_list = array();
+
     foreach ($decoded['results'] as $result) {
 
 

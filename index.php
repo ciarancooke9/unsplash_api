@@ -37,7 +37,7 @@
         <div class="col-lg-5">
             <div class="mb-3">
 
-                <form action="index.php" method="get">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="get">
                     <div class="col-auto">
                         <input type="hidden" name="page" value="1" />
                         <label for="inputPassword2" class="visually-hidden">Search</label>
