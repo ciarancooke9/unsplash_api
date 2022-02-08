@@ -20,20 +20,21 @@ function recentSearches($recentSearch='')
 }
 }
 
-function recentSearchesTable(){
+function recentSearchesTable()
+{
     $searchesArray = unserialize($_COOKIE['recentSearches'], ["allowed_classes" => false]);
 
-    //reverse array so most recent searches are first
+    //reverse array so most recent searches are first && remove duplicates
     $searchesArray = array_reverse($searchesArray);
+    $searchesArray = array_unique($searchesArray);
 
     echo "<h2>Your recent searches:</h2><br>";
     echo "<ul class='list-group'>";
-    //output searches as bullet points, limited to last 3 searches
+    //output searches as list, limited to last 3 searches
+    foreach (array_slice($searchesArray, 0, 3) as $searchTerm) {
 
-    echo "<li class='list-group-item'><a href='index.php?search={$searchesArray[0]}&page=1'>$searchesArray[0]</a></li>";
-    echo "<li class='list-group-item'><a href='index.php?search={$searchesArray[1]}&page=1'>$searchesArray[1]</a></li>";
-    echo "<li class='list-group-item'><a href='index.php?search={$searchesArray[2]}&page=1'>$searchesArray[2]</a></li>";
-
+    echo "<li class='list-group-item'><a href='index.php?search={$searchTerm}&page=1'>$searchTerm</a></li>";
+}
     echo "</ul>";
 }
 
