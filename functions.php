@@ -14,8 +14,7 @@ function recentSearches($recentSearch=''){
 
     // save the cookie
     setcookie('recentSearches', serialize($cookie), time()+3600);
-    $data = unserialize($_COOKIE['recentSearches'], ["allowed_classes" => false]);
-    return $data;
+
 }
 
 function recentSearchesTable($searchesArray){

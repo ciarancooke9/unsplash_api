@@ -55,8 +55,9 @@
 
                 </form>
                 <?php
+                    $data = unserialize($_COOKIE['recentSearches'], ["allowed_classes" => false]);
 
-                    recentSearchesTable(recentSearches());
+                    recentSearchesTable($data);
 
                 ?>
         </div>
