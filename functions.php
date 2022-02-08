@@ -1,6 +1,6 @@
 <?php
 
-function cleanInput($data) {
+function cleanSearchInput($data) {
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
@@ -17,9 +17,14 @@ function cleanInput($data) {
 function searchPhoto($query, $page = 1)
 {
     $ch = curl_init();
-
-    $query = cleanInput($query);
-    $page = cleanInput($page);
+    if ($query == ""){
+        echo "<h1>Please enter a search term.</h1>";
+        randomPhoto();
+    } else {
+        echo "<h1>You searched for: $query</h1>";
+    }
+    $query = cleanSearchInput($query);
+    $page = cleanSearchInput($page);
     $url = "https://api.unsplash.com/search/photos?page={$page}&per_page=9&query='{$query}'&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
 
     curl_setopt($ch, CURLOPT_URL, $url);
