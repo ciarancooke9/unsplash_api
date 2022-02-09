@@ -5,12 +5,13 @@ function recentSearches($recentSearch='')
     // if the cookie exists, read it and unserialize it. If not, create a blank array
     if ($recentSearch != '') {
         ///if array exsits read it and add $recentSearch value, Else create a new array
-    if (array_key_exists('recentSearches', $_COOKIE)) {
-        $cookie = $_COOKIE['recentSearches'];
-        $cookie = unserialize($cookie);
-    } else {
-        $cookie = array();
-    }
+        if (array_key_exists('recentSearches', $_COOKIE)) {
+            $cookie = $_COOKIE['recentSearches'];
+            $cookie = unserialize($cookie);
+            }
+        else {
+            $cookie = array();
+            }
 
     $cookie[] = $recentSearch;
 
@@ -80,7 +81,7 @@ function searchPhoto($query, $page = 1)
     }
     $i = 0;
     $picList = array();
-    //Extract links from JSON response and put them into an array, which is then outputted
+    //Extract links and image descriptions from JSON response and put them into an array, which is then outputted
     foreach ($decoded['results'] as $result) {
         $links = $result["urls"];
         $source = $links['small'];
@@ -92,7 +93,7 @@ function searchPhoto($query, $page = 1)
     curl_close($ch);
     return $picList;
 }
-//function to generate the picture cards
+//function to generate the picture cards and image descriptions, accepts and array as a parameter
 function searchPictureCardGenerator($picList){
     foreach ($picList as $link){
         echo '<div class="col-md-4 mb-5">';
@@ -141,7 +142,7 @@ function randomPhotoList()
     return $picList;
 }
 
-//function to generate the picture cards
+//function to generate the picture cards, accepts and array as a parameter
 function randomPictureCardGenerator($picList){
     foreach ($picList as $link){
         echo '<div class="col-md-4 mb-5">';
