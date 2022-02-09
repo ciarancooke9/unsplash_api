@@ -33,7 +33,7 @@ function recentSearchesTable()
     //output searches as list, limited to last 3 searches
     foreach (array_slice($searchesArray, 0, 3) as $searchTerm) {
 
-    echo "<li class='list-group-item'><a href='index.php?search={$searchTerm}&page=1'>$searchTerm</a></li>";
+    echo "<li class='list-group-item'><button type='button' class='btn btn-link'><a href='index.php?search={$searchTerm}&page=1'>$searchTerm</a></button></li>";
 }
     echo "</ul>";
 }
@@ -51,7 +51,9 @@ function cleanSearchInput($data) {
     return $data;
 }
 
-
+//this function accepts a search term and a page number
+// then requests images that match this search term from the unsplash api
+// and the page of results it wants
 function searchPhoto($query, $page = 1)
 {
     $ch = curl_init();
@@ -74,26 +76,25 @@ function searchPhoto($query, $page = 1)
         echo $err;
     } else {
         $decoded = json_decode($response, true);
-        //echo '<pre>'; print_r($decoded); echo '</pre>';
+
     }
     $i = 0;
-    $pic_list = array();
-
+    $picList = array();
+    //Extract links from JSON response and put them into an array, which is then outputted
     foreach ($decoded['results'] as $result) {
-
-
-        //echo $result["id"] . " ";
         $links = $result["urls"];
         $source = $links['small'];
         $alt = $result["description"];
-        array_push($pic_list, array($source, $alt));
-        //$pic_list[$i] = $source, $result["alt_description"];
+        array_push($picList, array($source, $alt));
         $i++;
-        ///echo "<img src='{$avatar}'> <br>";
     }
 
-
-    foreach ($pic_list as $link){
+    curl_close($ch);
+    return $picList;
+}
+//function to generate the picture cards
+function searchPictureCardGenerator($picList){
+    foreach ($picList as $link){
         echo '<div class="col-md-4 mb-5">';
         echo '<div class="card h-100">';
         echo "<div class='card-body'>";
@@ -105,10 +106,10 @@ function searchPhoto($query, $page = 1)
         echo "</div>";
 
     }
-    curl_close($ch);
-
 }
-function randomPhoto()
+
+//this function returns a list of urls for random images from the unsplash api
+function randomPhotoList()
 {
     $ch = curl_init();
     $random = rand(1,100);
@@ -123,23 +124,26 @@ function randomPhoto()
         echo $err;
     } else {
         $decoded = json_decode($response, true);
-        //echo '<pre>'; print_r($decoded); echo '</pre>';
     }
     $i = 0;
-    $pic_list = array();
+    $picList = array();
+    //Extract links from JSON response and put them into an array, which is then outputted
     foreach ($decoded as $result) {
 
-
-        //echo $result["id"] . " ";
         $links = $result["urls"];
         $source = $links['small'];
-        $pic_list[$i] = $source;
-        //$pic_list[$i] = $source, $result["alt_description"];
+        $picList[$i] = $source;
         $i++;
-        ///echo "<img src='{$avatar}'> <br>";
     }
-    $i = 0;
-    foreach ($pic_list as $link){
+
+
+    curl_close($ch);
+    return $picList;
+}
+
+//function to generate the picture cards
+function randomPictureCardGenerator($picList){
+    foreach ($picList as $link){
         echo '<div class="col-md-4 mb-5">';
         echo '<div class="card h-100">';
         echo "<div class='card-body'>";
@@ -151,21 +155,14 @@ function randomPhoto()
         echo "</div>";
 
     }
-    curl_close($ch);
-
 }
 
-function navFunction(){
-    echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=1'>1</a></li>";
-    echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=2'>2</a></li>";
-    echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=3'>3</a></li>";
-    echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=4'>4</a></li>";
-    echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=5'>5</a></li>";
-    echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=6'>6</a></li>";
-    echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=7'>7</a></li>";
-    echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=8'>8</a></li>";
-    echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=9'>9</a></li>";
-    echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page=10'>10</a></li>";
+//function which produces navbar
+function navbarFunction(){
+    for ($x = 1; $x <= 10; $x++) {
+        echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page={$x}'>{$x}</a></li>";
+    }
+
 }
 
 ?>

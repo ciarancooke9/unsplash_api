@@ -55,10 +55,9 @@
 
                 </form>
                 <?php
-
-
+                if (isset($_COOKIE['recentSearches'])){
                     recentSearchesTable();
-
+                }
                 ?>
         </div>
     </div>
@@ -68,11 +67,11 @@
     <div class="row gx-4 gx-lg-5">
         <?php
         if ($_GET){
-            searchPhoto($_GET['search'], $_GET['page']);
+            searchPictureCardGenerator(searchPhoto($_GET['search'], $_GET['page']));
 
         }
         else {
-            randomPhoto();
+            randomPictureCardGenerator(randomPhotoList());
         }
         ?>
 </div>
@@ -83,7 +82,7 @@
         <ul class="pagination">
         <?php
             if ($_GET) {
-                navFunction();
+                navbarFunction();
             }
         ?>
         </ul>
