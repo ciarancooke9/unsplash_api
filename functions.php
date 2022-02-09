@@ -1,7 +1,9 @@
 <?php
 //this function saves recent searches to a cookie
-function recentSearches($recentSearch='')
-{
+function recentSearches($recentSearch='') {
+    if (strlen($recentSearch) > 31){
+        return;
+    }
     // if the cookie exists, read it and unserialize it. If not, create a blank array
     if ($recentSearch != '') {
         ///if array exsits read it and add $recentSearch value, Else create a new array
@@ -20,7 +22,7 @@ function recentSearches($recentSearch='')
     setcookie('recentSearches', serialize($cookie), time() + 3600);
 }
 }
-
+// this function takes the array from the recent searches cookie and converts it into an array
 function recentSearchesTable()
 {
     $searchesArray = unserialize($_COOKIE['recentSearches'], ["allowed_classes" => false]);
@@ -60,6 +62,9 @@ function searchPhoto($query, $page = 1)
     $ch = curl_init();
     if ($query == ""){
         echo "<h1>Please enter a search term.</h1>";
+        randomPictureCardGenerator(randomPhotoList());
+    } elseif (strlen($query >= 30)) {
+        echo "<h1>Max search length is 30 characters</h1>";
         randomPictureCardGenerator(randomPhotoList());
     } else {
         echo "<h1>You searched for: $query</h1>";
