@@ -60,7 +60,7 @@ function searchPhoto($query, $page = 1)
     $ch = curl_init();
     if ($query == ""){
         echo "<h1>Please enter a search term.</h1>";
-        randomPhoto();
+        randomPictureCardGenerator(randomPhotoList());
     } else {
         echo "<h1>You searched for: $query</h1>";
     }
