@@ -163,7 +163,6 @@ function navbarFunction(){
     for ($x = 1; $x <= 10; $x++) {
         echo "<li class='page-item'><a class='page-link' href='index.php?search={$_GET['search']}&page={$x}'>{$x}</a></li>";
     }
-
 }
 
 ?>
