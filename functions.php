@@ -113,7 +113,8 @@ function searchPhoto($query, $page = 1)
         return $response['response'];
     }
 
-    return json_decode($response['response'], true);
+    $decoded = json_decode($response['response'], true);
+    return $decoded['results'];
 }
 
 //this function extracts links and descriptions from the unsplash api response
@@ -121,7 +122,7 @@ function linkAndDescriptionExtractor($array){
     //Extract links and image descriptions from JSON response and put them into an array, which is then outputted
     $i = 0;
     $picList = array();
-    foreach ($array['results'] as $result) {
+    foreach ($array as $result) {
         $links = $result["urls"];
         $source = $links['small'];
         $alt = $result["description"];
@@ -132,7 +133,7 @@ function linkAndDescriptionExtractor($array){
 }
 
 //function to generate the picture cards and image descriptions, accepts and array as a parameter
-function searchPictureCardGenerator($picList){
+function PictureCardGenerator($picList){
     foreach ($picList as $link){
         echo '<div class="col-md-4 mb-5">';
         echo '<div class="card h-100">';
@@ -140,7 +141,9 @@ function searchPictureCardGenerator($picList){
 
         echo "<a href='{$link[0]}'><img class='card-img' src='{$link[0]}' height='200' width='200'></a>";
         echo "</div>";
-        echo "<div class='card-body'> <p> {$link[1]}</p> </div>";
+        if ($_GET){
+            echo "<div class='card-body'> <p> {$link[1]}</p> </div>";
+        }
         echo "</div>";
         echo "</div>";
 
@@ -151,50 +154,17 @@ function searchPictureCardGenerator($picList){
 function randomPhotoList()
 {
 
-    $randomPage = rand(1,100);
-    $url = "https://api.unsplash.com/photos?page={$randomPage}&per_page=9&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
+    $page = rand(1,100);
+    $url = "https://api.unsplash.com/photos?page={$page}&per_page=9&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curlGetRequest($url);
 
-    $response = curl_exec($ch);
-
-    if ($err = curl_error($ch)) {
-        echo $err;
-    } else {
-        $decoded = json_decode($response, true);
-    }
-    $i = 0;
-    $picList = array();
-    //Extract links from JSON response and put them into an array, which is then outputted
-    foreach ($decoded as $result) {
-
-        $links = $result["urls"];
-        $source = $links['small'];
-        $picList[$i] = $source;
-        $i++;
+    if (!$response['request_success']){
+        return $response['response'];
     }
 
+    return json_decode($response['response'], true);
 
-    curl_close($ch);
-    return $picList;
-}
-
-//function to generate the picture cards, accepts and array as a parameter
-function randomPictureCardGenerator($picList){
-    foreach ($picList as $link){
-        echo '<div class="col-md-4 mb-5">';
-        echo '<div class="card h-100">';
-        echo "<div class='card-body'>";
-
-        echo "<a href='{$link}'><img class='card-img' src='{$link}' height='200' width='200'></a>";
-        echo "</div>";
-
-        echo "</div>";
-        echo "</div>";
-
-    }
 }
 
 //function which produces navbar
