@@ -25,12 +25,13 @@ function recentSearches($recentSearch='') {
 
 //function to edit recent searches to 3 most recent unique searched
 //takes serialized cookie array as parameter and outputs edited array
-function searchArrayEditor($serializedArray){
+function searchArrayEditor($serializedArray, $returnArrayLength=3){
     $editedArray = unserialize($serializedArray, ["allowed_classes" => false]);
 
-    //reverse array so most recent searches are first && remove duplicates
+    //reverse array so most recent searches are first && remove duplicates, limited to 3 by default
     $editedArray = array_reverse($editedArray);
     $editedArray = array_unique($editedArray);
+    $editedArray = array_slice($editedArray, 0, $returnArrayLength);
 
     return $editedArray;
 }
@@ -43,10 +44,9 @@ function recentSearchesTable(){
     echo "<h2>Your recent searches:</h2><br>";
     echo "<ul class='list-group'>";
     //output searches as list, limited to last 3 searches
-    foreach (array_slice($searchesArray, 0, 3) as $searchTerm) {
-
+    foreach ($searchesArray as $searchTerm) {
     echo "<li class='list-group-item'><button type='button' class='btn btn-link'><a href='index.php?search={$searchTerm}&page=1'>$searchTerm</a></button></li>";
-}
+    }
     echo "</ul>";
 }
 
@@ -73,9 +73,27 @@ function validateQuery($query, $maxLength = 30){
     }
 }
 
+function curlGetRequest($url){
+    //curl session open
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch); ///response array
+    curl_close($ch);
+    // curl session close
+
+    //check response status & output accordingly
+    if ($err = curl_error($ch)){
+        return ['request_success' => false, 'response' => $err];
+    }
+    return ['request_success' => true, 'response' => $response];
+}
+
+
 //this function accepts a search term and a page number
-// then requests images that match this search term from the unsplash api
-// and the page of results it wants
+// and returns a decoded json response from unsplash
 function searchPhoto($query, $page = 1)
 {
     //validate the query
@@ -85,37 +103,34 @@ function searchPhoto($query, $page = 1)
         return [];
     }
 
-    $ch = curl_init();
-
     $query = cleanSearchInput($query);
     $page = cleanSearchInput($page);
     $url = "https://api.unsplash.com/search/photos?page={$page}&per_page=9&query='{$query}'&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
 
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curlGetRequest($url);
 
-    $response = curl_exec($ch);
-
-    if ($err = curl_error($ch)) {
-        echo $err;
-    } else {
-        $decoded = json_decode($response, true);
-
+    if (!$response['request_success']){
+        return $response['response'];
     }
+
+    return json_decode($response['response'], true);
+}
+
+//this function extracts links and descriptions from the unsplash api response
+function linkAndDescriptionExtractor($array){
+    //Extract links and image descriptions from JSON response and put them into an array, which is then outputted
     $i = 0;
     $picList = array();
-    //Extract links and image descriptions from JSON response and put them into an array, which is then outputted
-    foreach ($decoded['results'] as $result) {
+    foreach ($array['results'] as $result) {
         $links = $result["urls"];
         $source = $links['small'];
         $alt = $result["description"];
         array_push($picList, array($source, $alt));
         $i++;
     }
-
-    curl_close($ch);
     return $picList;
 }
+
 //function to generate the picture cards and image descriptions, accepts and array as a parameter
 function searchPictureCardGenerator($picList){
     foreach ($picList as $link){

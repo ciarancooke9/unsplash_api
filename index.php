@@ -67,8 +67,7 @@
     <div class="row gx-4 gx-lg-5">
         <?php
         if ($_GET){
-            searchPictureCardGenerator(searchPhoto($_GET['search'], $_GET['page']));
-
+            searchPictureCardGenerator(linkAndDescriptionExtractor(searchPhoto($_GET['search'], $_GET['page'])));
         }
         else {
             randomPictureCardGenerator(randomPhotoList());
