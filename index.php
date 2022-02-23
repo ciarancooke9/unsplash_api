@@ -70,7 +70,7 @@
             PictureCardGenerator(linkAndDescriptionExtractor(searchPhoto($_GET['search'], $_GET['page'])));
         }
         else {
-            PictureCardGenerator(linkAndDescriptionExtractor(randomPhotoList()));
+            PictureCardGenerator(linkAndDescriptionExtractor(searchPhoto()));
         }
         ?>
 </div>

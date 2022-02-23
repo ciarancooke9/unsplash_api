@@ -93,18 +93,23 @@ function curlGetRequest($url){
 
 //this function accepts a search term and a page number
 // and returns a decoded json response from unsplash
-function searchPhoto($query, $page = 1)
+function searchPhoto($query = '', $page = 1)
 {
     //validate the query
-    $validation = validateQuery($query);
-    if(!$validation['query_valid']){
-        echo $validation['message'];
-        return [];
+    if ($_GET){
+        $validation = validateQuery($query);
+        if (!$validation['query_valid']) {
+            echo $validation['message'];
+            return [];
+        }
     }
-
     $query = cleanSearchInput($query);
-    $page = cleanSearchInput($page);
     $url = "https://api.unsplash.com/search/photos?page={$page}&per_page=9&query='{$query}'&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
+
+    if (!$_GET) {
+        $page = rand(1,100);
+        $url = "https://api.unsplash.com/photos?page={$page}&per_page=9&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
+    }
 
     $response = curlGetRequest($url);
 
@@ -112,8 +117,10 @@ function searchPhoto($query, $page = 1)
         return $response['response'];
     }
 
+
     $decoded = json_decode($response['response'], true);
-    return $decoded['results'];
+
+    return $_GET ? $decoded['results']: $decoded;
 }
 
 //this function extracts links and descriptions from the unsplash api response
@@ -147,23 +154,6 @@ function PictureCardGenerator($picList){
         echo "</div>";
 
     }
-}
-
-//this function returns a list of urls for random images from the unsplash api
-function randomPhotoList()
-{
-
-    $page = rand(1,100);
-    $url = "https://api.unsplash.com/photos?page={$page}&per_page=9&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
-
-    $response = curlGetRequest($url);
-
-    if (!$response['request_success']){
-        return $response['response'];
-    }
-
-    return json_decode($response['response'], true);
-
 }
 
 //function which produces navbar
