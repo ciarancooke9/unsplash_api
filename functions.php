@@ -8,8 +8,7 @@ function recentSearches($recentSearch='') {
     if ($recentSearch != '') {
         ///if array exsits read it and add $recentSearch value, Else create a new array
         if (array_key_exists('recentSearches', $_COOKIE)) {
-            $cookie = $_COOKIE['recentSearches'];
-            $cookie = unserialize($cookie);
+            $cookie = unserialize($_COOKIE['recentSearches']);
             }
         else {
             $cookie = array();
