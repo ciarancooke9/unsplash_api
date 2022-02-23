@@ -22,14 +22,23 @@ function recentSearches($recentSearch='') {
     setcookie('recentSearches', serialize($cookie), time() + 3600);
 }
 }
-// this function takes the array from the recent searches cookie and converts it into an array
-function recentSearchesTable()
-{
-    $searchesArray = unserialize($_COOKIE['recentSearches'], ["allowed_classes" => false]);
+
+//function to edit recent searches to 3 most recent unique searched
+//takes serialized cookie array as parameter and outputs edited array
+function searchArrayEditor($serializedArray){
+    $editedArray = unserialize($serializedArray, ["allowed_classes" => false]);
 
     //reverse array so most recent searches are first && remove duplicates
-    $searchesArray = array_reverse($searchesArray);
-    $searchesArray = array_unique($searchesArray);
+    $editedArray = array_reverse($editedArray);
+    $editedArray = array_unique($editedArray);
+
+    return $editedArray;
+}
+
+// this function takes the array from the recent searches cookie and converts it into an array
+function recentSearchesTable(){
+
+    $searchesArray = searchArrayEditor($_COOKIE['recentSearches']);
 
     echo "<h2>Your recent searches:</h2><br>";
     echo "<ul class='list-group'>";
@@ -126,10 +135,11 @@ function searchPictureCardGenerator($picList){
 //this function returns a list of urls for random images from the unsplash api
 function randomPhotoList()
 {
-    $ch = curl_init();
-    $random = rand(1,100);
-    $url = "https://api.unsplash.com/photos?page={$random}&per_page=9&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
 
+    $randomPage = rand(1,100);
+    $url = "https://api.unsplash.com/photos?page={$randomPage}&per_page=9&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
+
+    $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
