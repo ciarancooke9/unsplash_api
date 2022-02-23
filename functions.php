@@ -49,9 +49,19 @@ function cleanSearchInput($data) {
     ///Replace white spaces with +
     $searchString = " ";
     $replaceString = "+";
-    $data = str_replace($searchString, $replaceString, $data);
+    $data = str_replace($searchString, $replaceString, $data); //urlencode php function?
 
     return $data;
+}
+
+function validateQuery($query, $maxLength = 30){
+    if ($query == ""){
+        return ['message' => 'Please enter a search term.', 'query_valid' => false];
+    } elseif (strlen($query) >= $maxLength) {
+        return ['message' => 'Max search length is 30 characters', 'query_valid' => false];
+    } else {
+        return ['message' => "You searched for: '{$query}'", 'query_valid' => true];
+    }
 }
 
 //this function accepts a search term and a page number
@@ -59,16 +69,15 @@ function cleanSearchInput($data) {
 // and the page of results it wants
 function searchPhoto($query, $page = 1)
 {
-    $ch = curl_init();
-    if ($query == ""){
-        echo "<h1>Please enter a search term.</h1>";
-        randomPictureCardGenerator(randomPhotoList());
-    } elseif (strlen($query >= 30)) {
-        echo "<h1>Max search length is 30 characters</h1>";
-        randomPictureCardGenerator(randomPhotoList());
-    } else {
-        echo "<h1>You searched for: $query</h1>";
+    //validate the query
+    $validation = validateQuery($query);
+    if(!$validation['query_valid']){
+        echo $validation['message'];
+        return [];
     }
+
+    $ch = curl_init();
+
     $query = cleanSearchInput($query);
     $page = cleanSearchInput($page);
     $url = "https://api.unsplash.com/search/photos?page={$page}&per_page=9&query='{$query}'&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
