@@ -106,21 +106,22 @@ function searchPhoto($query = '', $page = 1)
     $query = cleanSearchInput($query);
     $url = "https://api.unsplash.com/search/photos?page={$page}&per_page=9&query='{$query}'&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
 
+    //if not get request use random picture Url
     if (!$_GET) {
         $page = rand(1,100);
         $url = "https://api.unsplash.com/photos?page={$page}&per_page=9&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
     }
 
-    $response = curlGetRequest($url);
+    $response = curlGetRequest($url); //returns json response from url
 
-    if (!$response['request_success']){
+    if (!$response['request_success']){ ///checks url response
         return $response['response'];
     }
 
 
     $decoded = json_decode($response['response'], true);
 
-    return $_GET ? $decoded['results']: $decoded;
+    return $_GET ? $decoded['results']: $decoded; //if GET(search) return results portion of array, else return full array
 }
 
 //this function extracts links and descriptions from the unsplash api response
