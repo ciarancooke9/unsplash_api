@@ -16,7 +16,6 @@ function recentSearches($recentSearch='') {
 
     $cookie[] = $recentSearch;
 
-
     // save the cookie
     setcookie('recentSearches', serialize($cookie), time() + 3600);
 }
@@ -27,7 +26,7 @@ function recentSearches($recentSearch='') {
 function searchArrayEditor($serializedArray, $returnArrayLength=3){
     $editedArray = unserialize($serializedArray, ["allowed_classes" => false]);
 
-    //reverse array so most recent searches are first && remove duplicates, limited to 3 by default
+    //reverse array so most recent searches are first & remove duplicates, limited to 3 by default
     $editedArray = array_reverse($editedArray);
     $editedArray = array_unique($editedArray);
     $editedArray = array_slice($editedArray, 0, $returnArrayLength);
@@ -54,12 +53,7 @@ function cleanSearchInput($data) {
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
 
-    ///Replace white spaces with +
-    $searchString = " ";
-    $replaceString = "+";
-    $data = str_replace($searchString, $replaceString, $data); //urlencode php function?
-
-    return $data;
+    return urlencode($data);
 }
 
 function validateQuery($query, $maxLength = 30){
@@ -72,6 +66,7 @@ function validateQuery($query, $maxLength = 30){
     }
 }
 
+//this function takes a url, sends a get request to this url and retrieves a json response
 function curlGetRequest($url){
     //curl session open
     $ch = curl_init();
@@ -106,7 +101,7 @@ function searchPhoto($query = '', $page = 1)
     $query = cleanSearchInput($query);
     $url = "https://api.unsplash.com/search/photos?page={$page}&per_page=9&query='{$query}'&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
 
-    //if not get request use random picture Url
+    //if not GET request use random picture Url
     if (!$_GET) {
         $page = rand(1,100);
         $url = "https://api.unsplash.com/photos?page={$page}&per_page=9&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
@@ -117,7 +112,6 @@ function searchPhoto($query = '', $page = 1)
     if (!$response['request_success']){ ///checks url response
         return $response['response'];
     }
-
 
     $decoded = json_decode($response['response'], true);
 
