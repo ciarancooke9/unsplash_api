@@ -86,7 +86,7 @@ function curlGetRequest($url){
 }
 
 
-//this function accepts a search term and a page number
+//this function accepts a search term and a URL
 // and returns a decoded json response from unsplash
 function searchPhoto($url = '', $query = '') //TODO remove hardcoded URLs
 {
