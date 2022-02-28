@@ -88,7 +88,7 @@ function curlGetRequest($url){
 
 //this function accepts a search term and a page number
 // and returns a decoded json response from unsplash
-function searchPhoto($query = '', $page = 1)
+function searchPhoto($url = '', $query = '') //TODO remove hardcoded URLs
 {
     //validate the query
     if ($_GET){
@@ -98,14 +98,8 @@ function searchPhoto($query = '', $page = 1)
             return [];
         }
     }
-    $query = cleanSearchInput($query);
-    $url = "https://api.unsplash.com/search/photos?page={$page}&per_page=9&query='{$query}'&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
 
     //if not GET request use random picture Url
-    if (!$_GET) {
-        $page = rand(1,100);
-        $url = "https://api.unsplash.com/photos?page={$page}&per_page=9&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc";
-    }
 
     $response = curlGetRequest($url); //returns json response from url
 

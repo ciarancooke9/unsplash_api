@@ -67,10 +67,11 @@
     <div class="row gx-4 gx-lg-5">
         <?php
         if ($_GET){
-            PictureCardGenerator(linkAndDescriptionExtractor(searchPhoto($_GET['search'], $_GET['page'])));
+            PictureCardGenerator(linkAndDescriptionExtractor(searchPhoto("https://api.unsplash.com/search/photos?page={$_GET['page']}&per_page=9&query='{$_GET['search']}'&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc", $_GET['search'])));
         }
         else {
-            PictureCardGenerator(linkAndDescriptionExtractor(searchPhoto()));
+            $page = rand(1,100);
+            PictureCardGenerator(linkAndDescriptionExtractor(searchPhoto("https://api.unsplash.com/photos?page={$page}&per_page=9&client_id=JfslSx-D_qWAmT2v0GDJoHQCcPNopiXkusPGA6JeXyc")));
         }
         ?>
 </div>
