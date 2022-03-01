@@ -88,13 +88,13 @@ function curlGetRequest($url){
 
 //this function accepts a search term and a URL
 // and returns a decoded json response from unsplash
-function searchPhoto($url = '', $query = '') //TODO remove hardcoded URLs
+function searchPhoto($url = '', $query = '')
 {
     //validate the query
     if ($_GET){
         $validation = validateQuery($query);
+        echo "<h1>{$validation['message']}</h1>";
         if (!$validation['query_valid']) {
-            echo $validation['message'];
             return [];
         }
     }
@@ -127,7 +127,7 @@ function linkAndDescriptionExtractor($array){
     return $picList;
 }
 
-//function to generate the picture cards and image descriptions, accepts and array as a parameter
+//function to generate the picture cards and image descriptions, accepts an array as a parameter
 function PictureCardGenerator($picList){
     foreach ($picList as $link){
         echo '<div class="col-md-4 mb-5">';
