@@ -4,7 +4,7 @@ function recentSearches($recentSearch='') {
     if (strlen($recentSearch) > 31){
         return;
     }
-    // if the cookie exists, read it and unserialize it. If not, create a blank array.
+    // if the cookie exists, read it and unserialize it. If not, create a blank array
     if ($recentSearch != '') {
         ///if array exsits read it and add $recentSearch value, Else create a new array
         if (array_key_exists('recentSearches', $_COOKIE)) {
