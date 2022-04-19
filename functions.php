@@ -1,5 +1,5 @@
 <?php
-//this function saves recent searches to a cookie
+//this function saves recent searches to a cookie.
 function recentSearches($recentSearch='') {
     if (strlen($recentSearch) > 31){
         return;
