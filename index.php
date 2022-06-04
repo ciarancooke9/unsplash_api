@@ -29,7 +29,7 @@
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.php">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="edit.php">Photo Editing</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">Service</a></li>
             </ul>
         </div>
     </div>
